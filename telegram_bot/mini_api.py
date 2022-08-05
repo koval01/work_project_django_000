@@ -15,7 +15,7 @@ class Api:
                 "key": self.key
             }
             ) as response:
-                return response.json() \
+                return await response.json() \
                     if response.status >= 200 < 300 \
                     else {"error": True}
 
