@@ -1,7 +1,7 @@
 from aiogram import types
-from telegram_bot.dispatcher import dp
-from telegram_bot.mini_api import Api
-from telegram_bot.config import white_users, APP_HOST
+from dispatcher import dp
+from mini_api import Api
+from config import white_users, APP_HOST
 
 
 @dp.message_handler(commands=['start'])
