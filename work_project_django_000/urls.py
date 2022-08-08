@@ -20,3 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include('keitaro.urls'))
 ]
+
+handler404 = 'keitaro.views.handler404'

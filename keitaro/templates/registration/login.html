@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title_page %}Авторизація{% endblock %}
+
+{% block custom_header %}
+    <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          display: flex;
+          align-items: center;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-color: #f5f5f5;
+        }
+
+        .form-signin {
+          max-width: 330px;
+          padding: 15px;
+        }
+
+        .form-signin .form-floating:focus-within {
+          z-index: 2;
+        }
+
+        .form-signin input[type="text"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <main class="form-signin w-100 m-auto">
+
+    {% if form.errors %}
+    <p>Ваше ім'я користувача та пароль не збігаються. Будь ласка спробуйте ще раз.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Ваш обліковий запис не має доступу до цієї сторінки. Щоб продовжити,
+         будь ласка, увійдіть за допомогою облікового запису, який має доступ.</p>
+        {% else %}
+        <p>Будь ласка, увійдіть, щоб побачити цю сторінку.</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 fw-normal">Будь ласка авторизуйтеся</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" name="username" placeholder="KovalYRS" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="floatingInput">
+            <label for="floatingInput">{{ form.username.label_tag }}</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" name="password" autocomplete="current-password" placeholder="********" required>
+            <label for="floatingPassword">{{ form.password.label_tag }}</label>
+        </div>
+
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Увійти</button>
+    </form>
+    </main>
+{% endblock %}

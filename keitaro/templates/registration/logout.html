@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title_page %}Вихід{% endblock %}
+
+{% block custom_header %}
+    <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          display: flex;
+          align-items: center;
+          padding-left: 40px;
+          padding-right: 40px;
+          background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 330px;
+            padding: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <main class="container w-100 m-auto">
+        <h1>Вихід</h1>
+        {% if user.is_authenticated %}
+            <p>Ваша сесія була завершена. Щоб перейти на до сторінки авторизації, скористайтеся цим <a href="{% url 'login' %}">посиланням</a>.</p>
+        {% else %}
+            <p>Ви не авторизовані, буль ласка перейдіть на <a href="{% url 'login' %}">сторінку авторизації</a>.</p>
+        {% endif %}
+    </main>
+{% endblock %}
