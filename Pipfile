@@ -9,6 +9,7 @@ aiogram = "*"
 whitenoise = "*"
 gunicorn = "*"
 requests = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
