@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-import re
+from urllib.parse import urlparse
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ DEBUG = False
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "secret_key_test" if DEBUG else os.getenv("SECRET_KEY")
 
-ALLOWED_HOSTS = ["*"] if DEBUG else [re.search(r"^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/?\n]+)", os.getenv("APP_HOST")).group(0)]
+ALLOWED_HOSTS = ["*"] if DEBUG else [urlparse(os.getenv("APP_HOST")).netloc]
 
 
 # Application definition
