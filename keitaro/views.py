@@ -1,8 +1,8 @@
 import json
 import os
+from datetime import datetime
 from uuid import uuid4
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -10,6 +10,13 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth import login, views as auth_views, logout
+from django.template.defaulttags import register
+from keitaro.keitaro_api import Keitaro
+
+
+@register.filter
+def get_item(dictionary, index):
+    return list(dictionary)[index]
 
 
 @csrf_exempt
@@ -52,7 +59,14 @@ class LogoutView(auth_views.LogoutView):
 
 @require_GET
 def home(request) -> render:
-    return render(request, "app/home.html")
+    report = Keitaro().report(
+        from_=datetime.strptime(request.GET.get('from'), '%Y-%m-%d'),
+        to=datetime.strptime(request.GET.get('to'), '%Y-%m-%d'),
+
+        grouping=["sub_id_6"],
+        metrics=["clicks", "conversions"],
+    ) if request.user.is_authenticated else None
+    return render(request, "app/home.html", {"report": report})
 
 
 def handler404(request, exception=None) -> HttpResponseRedirect:
