@@ -203,14 +203,13 @@
           <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">KeitaroApp</a>
           <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-              <a class="nav-link px-3" href="{% url 'logout' %}">Вихід</a>
+                <a class="nav-link px-3" href="{% url 'logout' %}">Вихід</a>
             </div>
           </div>
         </header>
 
         <div class="container-fluid">
           <div class="row">
-
             <main class="ms-sm-auto px-md-4">
               <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Статистика</h1>
@@ -235,7 +234,7 @@
                     })
                 </script>
               <div class="table-responsive">
-                <p style="padding-bottom: 1em">Сумарна статистика за обраний час</p>
+                <p style="padding-bottom: 1em">Привіт, {{ user.username }}, ось сумарна статистика за обраний час</p>
                 <table class="table table-striped table-sm">
                   <thead>
                     <tr>
@@ -246,11 +245,13 @@
                   </thead>
                   <tbody>
                     {% for row in report.rows %}
+                        {% if row.values|get_item:0 == user.username %}
                     <tr>
                       <td>{{ row.values|get_item:0 }}</td>
                       <td>{{ row.clicks }}</td>
                       <td>{{ row.conversions }}</td>
                     </tr>
+                        {% endif %}
                     {% endfor %}
                   </tbody>
                 </table>
